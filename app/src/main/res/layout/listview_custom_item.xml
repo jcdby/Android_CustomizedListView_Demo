@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/wifiImg"
+
+
+        android:src="@drawable/wifi"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/lockImg"
+        android:src="@drawable/lock"
+        android:layout_alignBottom="@+id/security"
+        android:layout_below="@+id/wifiName"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="This is for wifiName"
+        android:id="@+id/wifiName"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/wifiImg"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WAP"
+        android:id="@+id/security"
+        android:layout_alignBottom="@+id/wifiImg"
+        android:layout_below="@+id/wifiName"
+        android:layout_toEndOf="@+id/wifiImg"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:gravity="center_vertical" />
+</RelativeLayout>
