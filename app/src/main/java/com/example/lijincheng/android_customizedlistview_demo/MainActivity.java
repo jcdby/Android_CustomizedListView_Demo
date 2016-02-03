@@ -1,32 +1,64 @@
 package com.example.lijincheng.android_customizedlistview_demo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity {
+    List<WifiInformation> wifis;
+
+    private void iniData(){
+        if(wifis == null) {
+            List<WifiInformation> tempWifis = new ArrayList<WifiInformation>();
+            for (int i = 0; i < 100; i++) {
+                WifiInformation wifi = new WifiInformation("wifi" + i);
+                tempWifis.add(wifi);
+            }
+            wifis = tempWifis;
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<WifiInformation> wifis = new ArrayList<>();
+        //dummy data creationg
+        iniData();
 
-        for (int i = 0; i < 5; i++) {
-            WifiInformation wifi = new WifiInformation("wifi" + i);
-            wifis.add(wifi);
-        }
-
-        WifiListAdapter wifiAdapter = new WifiListAdapter(this, R.layout.listview_custom_item,
+        //create adapter and listview, set wifiadapter to listview
+        final WifiListAdapter wifiAdapter = new WifiListAdapter(this, R.layout.listview_custom_item,
                 wifis);
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(wifiAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                WifiNameModifier wnm = new WifiNameModifier();
+                wnm.setPosition(i);
+                Log.i("SelectedPosition","" + i);
+                wnm.setWifiAdapter(wifiAdapter);
+                wnm.show(getFragmentManager(), "Alert");
+
+
+
+
+            }
+        });
 
     }
 

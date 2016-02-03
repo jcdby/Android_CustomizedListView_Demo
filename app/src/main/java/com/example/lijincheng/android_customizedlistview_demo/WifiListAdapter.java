@@ -22,6 +22,19 @@ public class WifiListAdapter extends ArrayAdapter<WifiInformation> {
     }
 
     @Override
+    public int getPosition(WifiInformation item) {
+        return super.getPosition(item);
+    }
+
+
+    @Override
+    public WifiInformation getItem(int position) {
+        return super.getItem(position);
+    }
+
+
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
