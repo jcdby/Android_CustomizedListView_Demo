@@ -13,4 +13,13 @@ the choosed item name.User can change the item in the dialog.The Changed item al
 #WifiListAdapter
   WifiListAdapter is a subclass of ArrayAdatper, that is because ArrayAdapter  is too simple to show complex views. So, here i chose to extends ArrayAdapter. 
   WifiListAdapter has a list of WifiInformation objects. The important thing is that we have to override the getView method inherited from ArrayAdapter.This method is a rendering method that is in charge of getting the souce data showing on the view, structurely.
-
+  Each of view in the list view has a ImageView showing wifi state, a TextView showing wifi name, another TextView showing its security police, another ImageView showing if it is blocked or not.
+  
+#WifiNameModifier
+  WifiNameModifier is a subclass of the DialogFragment. That is because the Default Dialog object can not satisfies the our needs.We need a dialog that can show each view`s wifi state image, wifi name. Also we need a dialog that can change wifi name through an EditText View.
+  It has a WifiListAdapter object, a position of int, and an EditText view.
+  Every Time an user clicks any view, ListView would pass the postion of that view and the data source, namely WifiListAdapter, to the DialogFragment.
+  After that, the initial dialog would show the name of the clicked view item on the EditText view.Users can change the item`s name and click OK button, the data source would be updated.After that, the name of that clicked view item in list view would be updated to the new name.
+#WifiSecurity and WifiState
+  They are both enum class about security police information and wifi state information. In the future, i will extend the version to show different wifi state image according to its value. So does security police. 
+  

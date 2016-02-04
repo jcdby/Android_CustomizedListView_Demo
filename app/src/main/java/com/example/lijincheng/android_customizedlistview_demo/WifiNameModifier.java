@@ -71,7 +71,7 @@ public class WifiNameModifier extends DialogFragment {
                 if (actionId == EditorInfo.IME_ACTION_SEND
                         || actionId == EditorInfo.IME_ACTION_DONE
                         || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
-                    setSelectedItemWifiName(et.getText().toString());
+                    setSelectedItemWifiName(v.getText().toString());
                 }
                 return false;
             }
