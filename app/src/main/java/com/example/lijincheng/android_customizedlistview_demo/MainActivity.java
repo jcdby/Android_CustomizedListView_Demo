@@ -51,7 +51,6 @@ public class MainActivity extends Activity {
                 //WifiNameModifier is a subclass of DialogFragment
                 WifiNameModifier wnm = new WifiNameModifier();
                 wnm.setPosition(i);
-                Log.i("SelectedPosition", "" + i);
                 wnm.setWifiAdapter(wifiAdapter);
                 wnm.show(getFragmentManager(), "Alert");
 
