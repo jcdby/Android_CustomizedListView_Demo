@@ -1,7 +1,6 @@
 package com.example.lijincheng.android_customizedlistview_demo;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,8 +13,34 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MessagePipline {
     List<WifiInformation> wifis;
+    WifiListAdapter wifiAdapter;
+    int position;
+    WifiNameModifier wnm;
+
+
+    @Override
+    public void sendMessageByPosition(String message, int position) {
+        wifiAdapter.getItem(position).setWifiName(message);
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public List<WifiInformation> getWifis() {
+        return wifis;
+    }
+
+    public void setWifis(List<WifiInformation> wifis) {
+        this.wifis = wifis;
+    }
+
 
     private void iniData(){
         if(wifis == null) {
@@ -29,6 +54,7 @@ public class MainActivity extends Activity {
     }
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +64,11 @@ public class MainActivity extends Activity {
         iniData();
 
         //create adapter and listview, set wifiadapter to listview
-        final WifiListAdapter wifiAdapter = new WifiListAdapter(this, R.layout.listview_custom_item,
+        wifiAdapter = new WifiListAdapter(this, R.layout.listview_custom_item,
                 wifis);
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(wifiAdapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -49,15 +76,10 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //WifiNameModifier is a subclass of DialogFragment
-                WifiNameModifier wnm = new WifiNameModifier();
-                wnm.setPosition(i);
+                wnm = new WifiNameModifier();
+                wnm.sendMessageByPosition(wifis.get(i).getWifiName(), i);
                 Log.i("SelectedPosition", "" + i);
-                wnm.setWifiAdapter(wifiAdapter);
                 wnm.show(getFragmentManager(), "Alert");
-
-
-
-
             }
         });
 
