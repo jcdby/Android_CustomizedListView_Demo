@@ -29,8 +29,10 @@ public class WifiNameModifier extends DialogFragment  {
     int position = 0;
     MessagePipline sListener;
     String message = "";
-    EditText et;
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public void sendMessageByPosition(String message, int position) {
         this.message = message;
@@ -73,7 +75,7 @@ public class WifiNameModifier extends DialogFragment  {
         View diaView = inflater.inflate(R.layout.dialog_custom, null);
 
         //get the EditText from the customized dialog view
-        et = (EditText) diaView.findViewById(R.id.dialog_wifiname_input);
+        final EditText et = (EditText) diaView.findViewById(R.id.dialog_wifiname_input);
 
         et.setHint(getMessage());
         ad.setTitle("Change the wifi name");
@@ -91,16 +93,21 @@ public class WifiNameModifier extends DialogFragment  {
                         || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
 
                     sListener.sendMessageByPosition(v.getText().toString(), getPosition());
+
+                    Log.i("ActionID", "true");
                 }
+
                 return false;
             }
         });
+
 
 
         ad.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Log.i("new wifi name", et.getText().toString());
+
 
                 sListener.sendMessageByPosition(et.getText().toString(), getPosition());
 

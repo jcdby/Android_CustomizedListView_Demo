@@ -16,22 +16,16 @@ import java.util.List;
 public class MainActivity extends Activity implements MessagePipline {
     List<WifiInformation> wifis;
     WifiListAdapter wifiAdapter;
-    int position;
-    WifiNameModifier wnm;
+
+
 
 
     @Override
     public void sendMessageByPosition(String message, int position) {
-        wifiAdapter.getItem(position).setWifiName(message);
+        wifis.get(position).setWifiName(message);
+        wifiAdapter.notifyDataSetChanged();
     }
 
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
 
     public List<WifiInformation> getWifis() {
         return wifis;
@@ -54,21 +48,16 @@ public class MainActivity extends Activity implements MessagePipline {
     }
 
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    protected void onStart() {
+        super.onStart();
         //dummy data creationg
         iniData();
-
         //create adapter and listview, set wifiadapter to listview
         wifiAdapter = new WifiListAdapter(this, R.layout.listview_custom_item,
                 wifis);
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(wifiAdapter);
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -76,12 +65,27 @@ public class MainActivity extends Activity implements MessagePipline {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //WifiNameModifier is a subclass of DialogFragment
-                wnm = new WifiNameModifier();
-                wnm.sendMessageByPosition(wifis.get(i).getWifiName(), i);
-                Log.i("SelectedPosition", "" + i);
+                WifiNameModifier wnm = new WifiNameModifier();
+
+                wnm.setMessage(wifis.get(i).getWifiName());
+                wnm.setPosition(i);
+                Log.i("SelectedPosition", "" + wifis.get(i).toString());
                 wnm.show(getFragmentManager(), "Alert");
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+
+
+
+
+
 
     }
 
